@@ -114,5 +114,6 @@ select * from tarefas
 select id_software,Nome_software from softwares
 select * from inventarios  
  --commit auto 
+ -- Antonio Rosario Teste Julio 
 --Query que retorna a lista tarefas ralcionadas a grupos que NÃO estão relacionados a respectiva tarefa
 select g.nome_grupo from  reltarefas rt join grupos g on rt.fk_id_grupo = g.id_grupo where g.id_grupo not in (select g.id_grupo from  reltarefas rt join grupos g on rt.fk_id_grupo = g.id_grupo where g.id_grupo= 2)
