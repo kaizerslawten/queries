@@ -21,4 +21,11 @@ while true; do
 		echo Commit Automatico efetuado $(date) com sucesso!
 		sleep 60;
 		fi
+		
+		#Efetuando commit para master 18:00
+	if [[ $(date) == *"18:00:"* ]]; then	
+		git add . && git commit -m "Antonio Rosario - $(date)" && git push origin master >> /dev/null
+		echo Commit Automatico efetuado $(date) com sucesso!
+		sleep 60;
+		fi
 done

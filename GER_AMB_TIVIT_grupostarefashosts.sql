@@ -117,3 +117,9 @@ select * from inventarios
  -- Antonio Rosario Teste Julio 
 --Query que retorna a lista tarefas ralcionadas a grupos que NÃO estão relacionados a respectiva tarefa
 select g.nome_grupo from  reltarefas rt join grupos g on rt.fk_id_grupo = g.id_grupo where g.id_grupo not in (select g.id_grupo from  reltarefas rt join grupos g on rt.fk_id_grupo = g.id_grupo where g.id_grupo= 2)
+
+--query que retorna lista de grupos relacionados a determinada tarefa
+select * from reltarefas rt join grupos g on rt.fk_id_grupo=g.id_grupo where g.id_grupo=1
+
+select g.nome_grupo from reltarefas rt join grupos g on rt.fk_id_grupo=g.id_grupo where fk_id_tarefa =3
+select t.id_tarefa ,t.nome_tarefa 'Tarefa',(select COUNT(sv.fk_id_tarefa) from (select fk_id_tarefa from reltarefas rt join grupos g on rt.fk_id_grupo = g.id_grupo)sv where sv.fk_id_tarefa=t.id_tarefa)'Total de Grupos',(case t.status_tarefa when '1' then 'ATIVA' else 'INATIVA' END) 'Status' from tarefas t order by t.nome_tarefa
