@@ -112,7 +112,7 @@ update tarefas set status_tarefa = 1 where id_tarefa =2
 --Retorna combo de softwares da tela Adicionar tarefas
 select * from tarefas
 select id_software,Nome_software from softwares
-select * from inventarios
- 
+select * from inventarios  
+ --commit auto 
 --Query que retorna a lista tarefas ralcionadas a grupos que NÃO estão relacionados a respectiva tarefa
 select g.nome_grupo from  reltarefas rt join grupos g on rt.fk_id_grupo = g.id_grupo where g.id_grupo not in (select g.id_grupo from  reltarefas rt join grupos g on rt.fk_id_grupo = g.id_grupo where g.id_grupo= 2)
