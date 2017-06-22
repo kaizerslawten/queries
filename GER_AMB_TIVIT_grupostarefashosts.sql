@@ -1,5 +1,5 @@
 insert into grupos values('SERVERS')
-insert into maquinas values('KJSDF3331','NBTVALOURA','DATACRIACAO2','DATAULTIMOREPORT','DATAINVENTARIO','DATAENVIOINVENTARIO','ATIVO')
+insert into maquinas values('KJSDF3331','PCTXPTO123','DATACRIACAO2','DATAULTIMOREPORT','DATAINVENTARIO','DATAENVIOINVENTARIO','ATIVO')
 insert into relgrupo values(3,1)
 insert into reltarefas values(2,4)
 insert into softwares values('Firefox','53','Browser','\\localhost\Mozilla\firefox.exe','EXE','Mozilla','FREE','/qn /norestart')
@@ -99,7 +99,8 @@ select m.Hostname,g.nome_grupo,t.nome_tarefa,s.Nome_software,s.Descricao_softwar
 
 update pooltarefas set status = ''
 --Retorna lista de equipamentos que não estão em um grupo em questão
-select distinct(m.Hostname),m.id  from relgrupo rg join maquinas m on rg.id_maquina = m.id join grupos g on g.id_grupo = rg.id_grupo where m.id not in (select m.id from relgrupo rg join maquinas m on rg.id_maquina = m.id join grupos g on g.id_grupo = rg.id_grupo where g.id_grupo =3)
+select id,Hostname from maquinas where id not in (select rg.id_maquina from relgrupo rg join grupos g on rg.id_grupo = 18)
+select distinct(m.Hostname),m.id  from relgrupo rg join maquinas m on rg.id_maquina = m.id join grupos g on g.id_grupo = rg.id_grupo where m.id not in (select m.id from relgrupo rg join maquinas m on rg.id_maquina = m.id join grupos g on g.id_grupo = rg.id_grupo where g.id_grupo =18)
 select g.nome_grupo,m.Hostname,t.nome_tarefa,s.Nome_software,s.Descricao_software,(s.Caminho_software+' '+s.Parametro_software) comando from reltarefas rt join grupos g on rt.fk_id_grupo = g.id_grupo join tarefas t on rt.fk_id_tarefa = t.id_tarefa join relgrupo rg on rg.id_grupo = g.id_grupo join maquinas m on m.id = rg.id_maquina join softwares s on s.id_software = t.fk_id_software where g.id_grupo =3
 delete from grupos where nome_grupo = 'NOTEBOOKS'
 delete from relgrupo where id_maquina =3; delete from grupos where id_grupo = 3
@@ -125,5 +126,8 @@ select g.nome_grupo from reltarefas rt join grupos g on rt.fk_id_grupo=g.id_grup
 select t.id_tarefa ,t.nome_tarefa 'Tarefa',(select COUNT(sv.fk_id_tarefa) from (select fk_id_tarefa from reltarefas rt join grupos g on rt.fk_id_grupo = g.id_grupo)sv where sv.fk_id_tarefa=t.id_tarefa)'Total de Grupos',(case t.status_tarefa when '1' then 'ATIVA' else 'INATIVA' END) 'Status' from tarefas t order by t.nome_tarefa
 
 --Query que retorna lista de grupos que não estão relacionados a tarefa selecionada na combo de adicionar grupo
-select * from reltarefas rt join grupos g on rt.fk_id_grupo = g.id_grupo --(select g.id_grupo Grupo from reltarefas rt join grupos g on rt.fk_id_grupo=g.id_grupo where fk_id_tarefa = 3)
-select * from relgrupo
+select * from grupos where id_grupo not in(select rt.fk_id_grupo from reltarefas rt join grupos g on rt.fk_id_grupo = g.id_grupo where rt.fk_id_tarefa =3)
+select * from relgrupo rg join grupos g on rg.id_grupo = g.id_grupo
+select * from maquinas where id not in (select rg.id_maquina from relgrupo rg join grupos g on rg.id_grupo = 18)
+select * from grupos
+select * from tarefas
