@@ -131,3 +131,9 @@ select * from relgrupo rg join grupos g on rg.id_grupo = g.id_grupo
 select * from maquinas where id not in (select rg.id_maquina from relgrupo rg join grupos g on rg.id_grupo = 18)
 select * from grupos
 select * from tarefas
+
+--Query para verificar se tarefa está relacionada a grupos.
+select COUNT(*)contagem from reltarefas rt join grupos g on rt.fk_id_grupo = g.id_grupo where rt.fk_id_tarefa = 3
+delete 
+select id_grupo,nome_grupo from grupos where id_grupo not in(select rt.fk_id_grupo from reltarefas rt join grupos g on rt.fk_id_grupo = g.id_grupo where rt.fk_id_tarefa =5)
+select * from reltarefas
